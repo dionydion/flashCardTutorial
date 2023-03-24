@@ -72,6 +72,7 @@
   border-radius: 10px;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .decks li:hover {
@@ -82,4 +83,15 @@
 .App button {
   background-color: #fff;
   color: black;
+}
+
+.decks li button {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  font-size: 12px;
+  top: 5px;
+  right: 5px;
+  padding: 20px;
+  background: none;
 }

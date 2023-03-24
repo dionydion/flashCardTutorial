@@ -23,12 +23,31 @@ function App() {
         "Content-Type": "application/json",
       },
     })
-      .then((res) => {
+      .then(async (res) => {
         setTitle("");
+        const deck = await res.json();
+        setDecks([...decks, deck]);
       })
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  function handleDeleteDeck(id: string) {
+    fetch(`http://localhost:5000/decks/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    setDecks(decks.filter((deck) => deck._id !== id));
   }
 
   useEffect(() => {
@@ -41,7 +60,10 @@ function App() {
     <div className="App">
       <ul className="decks">
         {decks.map((deck) => (
-          <li key={deck._id}>{deck.title}</li>
+          <li key={deck._id}>
+            <button onClick={() => handleDeleteDeck(deck._id)}>X</button>
+            {deck.title}
+          </li>
         ))}
       </ul>
       <form>
