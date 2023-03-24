@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
+import { createDeck, deleteDeck, getDecks } from "./api/Deck";
 
 type TDeck = {
   title: string;
@@ -14,15 +15,7 @@ function App() {
 
   function handleCreateDeck(e: React.FormEvent) {
     e.preventDefault();
-    fetch("http://localhost:5000/decks", {
-      method: "POST",
-      body: JSON.stringify({
-        title: title,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    createDeck(title)
       .then(async (res) => {
         setTitle("");
         const deck = await res.json();
@@ -34,24 +27,17 @@ function App() {
   }
 
   function handleDeleteDeck(id: string) {
-    fetch(`http://localhost:5000/decks/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    deleteDeck(id)
       .then((res) => {
-        console.log(res);
+        setDecks(decks.filter((deck) => deck._id !== id));
       })
       .catch((error) => {
         console.log(error);
       });
-
-    setDecks(decks.filter((deck) => deck._id !== id));
   }
 
   useEffect(() => {
-    fetch("http://localhost:5000/decks").then(async (res) => {
+    getDecks().then(async (res) => {
       setDecks(await res.json());
     });
   }, []);
