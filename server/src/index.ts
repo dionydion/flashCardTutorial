@@ -1,17 +1,21 @@
 import express, { Request, Response } from "express";
 import mongoose from "mongoose";
 import DeckModel from "./models/Deck";
+import cors from "cors";
 require("dotenv").config();
 
 const PORT = 5000;
 const app = express();
 app.use(express.json());
+app.use(cors());
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Hello World");
+app.get("/decks", async (req: Request, res: Response) => {
+  const decks = await DeckModel.find();
+  res.json(decks);
 });
 
 app.post("/decks", async (req: Request, res: Response) => {
+  console.log(req.body);
   const newDeck = new DeckModel({
     // creates a model
     title: req.body.title,
