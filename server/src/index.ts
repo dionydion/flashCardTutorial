@@ -2,6 +2,12 @@ import express, { Request, Response } from "express";
 import mongoose from "mongoose";
 import DeckModel from "./models/Deck";
 import cors from "cors";
+import {
+  createDeckController,
+  deleteDeckController,
+  getDeckController,
+} from "./controller/DeckController";
+import { createCardController } from "./controller/CardController";
 require("dotenv").config();
 
 const PORT = 5000;
@@ -9,27 +15,13 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.get("/decks", async (req: Request, res: Response) => {
-  const decks = await DeckModel.find();
-  res.json(decks);
-});
+app.get("/decks", getDeckController);
 
-app.post("/decks", async (req: Request, res: Response) => {
-  console.log(req.body);
-  const newDeck = new DeckModel({
-    // creates a model
-    title: req.body.title,
-  });
-  const createdDeck = await newDeck.save(); // inserts a new document
-  res.json(createdDeck);
-});
+app.post("/decks", createDeckController);
 
-app.delete("/decks/:deckId", (req: Request, res: Response) => {
-  console.log(req.params);
-  DeckModel.findOneAndDelete({ _id: req.params.deckId }).then((deck) => {
-    res.json(deck);
-  });
-});
+app.delete("/decks/:deckId", deleteDeckController);
+
+app.post("/decks/:deckId/cards", createCardController);
 
 mongoose.connect(process.env.MONGO_URL ?? "").then(() => {
   console.log(`Now listening at port ${PORT}`);
