@@ -2,8 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
+import "./Header.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Deck from "./Deck";
+import Header from "./Header";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +20,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <div className="page">
+      <Header></Header>
+      <RouterProvider router={router} />
+    </div>
   </React.StrictMode>
 );
