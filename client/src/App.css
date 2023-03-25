@@ -55,7 +55,8 @@
   align-items: center;
 }
 
-.decks {
+.decks,
+.cards {
   display: grid;
   width: 600px;
   margin: 0 auto;
@@ -64,7 +65,8 @@
   color: black;
 }
 
-.decks li {
+.decks li,
+.cards li {
   display: flex;
   height: 120px;
   background: white;
@@ -75,7 +77,8 @@
   position: relative;
 }
 
-.decks li:hover {
+.decks li:hover,
+.cards li:hover {
   background: #eee;
   cursor: pointer;
 }
@@ -85,13 +88,13 @@
   color: black;
 }
 
-.decks li button {
+.decks li button,
+.cards li button {
   position: absolute;
   width: 10px;
   height: 10px;
   font-size: 12px;
   top: 5px;
   right: 5px;
-  padding: 20px;
   background: none;
 }

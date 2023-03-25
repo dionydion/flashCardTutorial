@@ -7,7 +7,11 @@ import {
   deleteDeckController,
   getDeckController,
 } from "./controller/DeckController";
-import { createCardController } from "./controller/CardController";
+import {
+  createCardController,
+  deleteCardController,
+  getCardController,
+} from "./controller/CardController";
 require("dotenv").config();
 
 const PORT = 5000;
@@ -22,6 +26,10 @@ app.post("/decks", createDeckController);
 app.delete("/decks/:deckId", deleteDeckController);
 
 app.post("/decks/:deckId/cards", createCardController);
+
+app.get("/decks/:deckId/cards", getCardController);
+
+app.delete("/decks/:deckId/:cardId", deleteCardController);
 
 mongoose.connect(process.env.MONGO_URL ?? "").then(() => {
   console.log(`Now listening at port ${PORT}`);
